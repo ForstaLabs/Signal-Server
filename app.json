@@ -1,0 +1,89 @@
+{
+  "name": "TextSecure-Server",
+  "description": "Heroku Deployment file",
+  "scripts": {
+  },
+  "env": {
+    "ACCOUNTSTORE_DRIVERCLASS": {
+      "required": true
+    },
+    "ACCOUNTSTORE_PASSWORD": {
+      "required": true
+    },
+    "ACCOUNTSTORE_URL": {
+      "required": true
+    },
+    "ACCOUNTSTORE_USERNAME": {
+      "required": true
+    },
+    "MESSAGESTORE_DRIVERCLASS": {
+      "required": true
+    },
+    "MESSAGESTORE_PASSWORD": {
+      "required": true
+    },
+    "MESSAGESTORE_URL": {
+      "required": true
+    },
+    "MESSAGESTORE_USERNAME": {
+      "required": true
+    },
+    "PUSHSERVER_HOST": {
+      "required": true
+    },
+    "PUSHSERVER_PASSWORD": {
+      "required": true
+    },
+    "PUSHSERVER_PORT": {
+      "required": true
+    },
+    "PUSHSERVER_QUEUESIZE": {
+      "required": true
+    },
+    "PUSHSERVER_USERNAME": {
+      "required": true
+    },
+    "REDIS_CACHEURL": {
+      "required": true
+    },
+    "REDIS_DIRECTORYURL": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    },
+    "S3_ACCESSKEY": {
+      "required": true
+    },
+    "S3_ACCESSSECRET": {
+      "required": true
+    },
+    "S3_ATTACHMENTSBUCKET": {
+      "required": true
+    },
+    "TWILIO_ACCOUNTID": {
+      "required": true
+    },
+    "TWILIO_ACCOUNTTOKEN": {
+      "required": true
+    },
+    "TWILIO_LOCALDOMAIN": {
+      "required": true
+    },
+    "TWILIO_NUMBERS": {
+      "required": true
+    },
+    "WEBSOCKET_ENABLE": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis"
+  ],
+  "buildpacks": [
+
+  ]
+}
