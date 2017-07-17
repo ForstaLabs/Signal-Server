@@ -20,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TwilioConfiguration {
@@ -61,5 +63,26 @@ public class TwilioConfiguration {
 
   public String getMessagingServicesId() {
     return messagingServicesId;
+  }
+
+  public TwilioConfiguration() {
+
+  }
+
+  public TwilioConfiguration(
+    String accountId,
+    String accountToken,
+    String localDomain,
+    String messagingServicesId,
+    String numbers)
+  {
+      this.accountId           = accountId;
+      this.accountToken        = accountToken;
+      this.localDomain         = localDomain;
+      this.messagingServicesId = messagingServicesId;
+
+      this.numbers = new ArrayList<String>();
+
+      this.numbers.add(numbers);
   }
 }

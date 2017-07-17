@@ -107,39 +107,50 @@ public class WhisperServerConfiguration extends Configuration {
 
 
   public WebsocketConfiguration getWebsocketConfiguration() {
-    return websocket;
+
+    return ForstaConfiguration.getWebsocketConfiguration();
   }
 
   public TwilioConfiguration getTwilioConfiguration() {
-    return twilio;
+
+    return ForstaConfiguration.getTwilioConfiguration();
   }
 
   public PushConfiguration getPushConfiguration() {
-    return push;
+
+    return ForstaConfiguration.getPushConfiguration();
   }
 
   public JerseyClientConfiguration getJerseyClientConfiguration() {
+
     return httpClient;
   }
 
   public S3Configuration getS3Configuration() {
-    return s3;
+
+    this.s3 =  ForstaConfiguration.getS3Configuration();
+
+    return this.s3;
   }
 
   public RedisConfiguration getCacheConfiguration() {
-    return cache;
+
+      return ForstaConfiguration.getRedisCacheConfiguration();
   }
 
   public RedisConfiguration getDirectoryConfiguration() {
-    return directory;
+
+    return ForstaConfiguration.getRedisDirectoryConfiguration();
   }
 
   public DataSourceFactory getMessageStoreConfiguration() {
-    return messageStore;
+
+    return ForstaConfiguration.getMessageDatabaseConfiguration();
   }
 
   public DataSourceFactory getDataSourceFactory() {
-    return database;
+
+    return ForstaConfiguration.getAccountDatabaseConfiguration();
   }
 
   public DataSourceFactory getReadDataSourceFactory() {

@@ -45,4 +45,22 @@ public class PushConfiguration {
   public int getQueueSize() {
     return queueSize;
   }
+
+  public PushConfiguration() {
+
+  }
+
+  public PushConfiguration(
+    String  host,
+    int     port,
+    String  username,
+    String  password,
+    int     queueSize)
+  {
+      this.host      = host;
+      this.port      = port;
+      this.username  = username;
+      this.password  = password;
+      this.queueSize = queueSize;
+  }
 }
