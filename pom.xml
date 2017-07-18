@@ -249,13 +249,13 @@
 
     <repositories>
         <repository>
-            <id>gcm-server-repository</id>
-            <url>https://raw.github.com/whispersystems/maven/master/gcm-server/releases/</url>
-        </repository>
-        <repository>
           <id>project.local</id>
           <name>project</name>
           <url>file:${project.basedir}/repo</url>
+        </repository>
+        <repository>
+            <id>gcm-server-repository</id>
+            <url>https://raw.github.com/whispersystems/maven/master/gcm-server/releases/</url>
         </repository>
     </repositories>
 
