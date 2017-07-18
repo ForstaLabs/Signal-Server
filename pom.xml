@@ -241,6 +241,9 @@
                         <phase>package</phase>
                         <goals><goal>copy-dependencies</goal></goals>
                     </execution>
+                      <configuration>
+                            <outputDirectory>${project.build.directory}/dependency/</outputDirectory>
+                        </configuration>
                 </executions>
             </plugin>
 
