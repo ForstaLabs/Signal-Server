@@ -239,10 +239,7 @@
                     <execution>
                         <id>copy-dependencies</id>
                         <phase>package</phase>
-                        <goals><goal>copy-dependencies</goal>
-                      <configuration>
-                            <outputDirectory>${project.build.directory}/dependency/</outputDirectory>
-                        </configuration></goals>
+                        <goals><goal>copy-dependencies</goal></goals>
                     </execution>
                 </executions>
             </plugin>
