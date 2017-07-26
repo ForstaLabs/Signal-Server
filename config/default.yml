@@ -20,11 +20,13 @@ s3: # AWS S3 configuration
   # correct permissions.
   attachmentsBucket: heroku
 
-#directory: # Redis server configuration for TS directory
-#  url: "heroku"
+#directory:
+#Redis server configuration for TS directory
+#url: "heroku"
 
-#cache: # Redis server configuration for general purpose caching
-#  url: "heroku"
+#cache:
+#Redis server configuration for general purpose caching
+#url: "heroku"
 
 websocket:
   enabled: true
