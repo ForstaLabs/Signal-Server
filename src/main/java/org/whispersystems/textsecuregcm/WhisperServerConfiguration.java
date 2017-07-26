@@ -145,12 +145,14 @@ public class WhisperServerConfiguration extends Configuration {
 
   public DataSourceFactory getMessageStoreConfiguration() {
 
-    return ForstaConfiguration.getMessageDatabaseConfiguration();
+    return messageStore;
+    //return ForstaConfiguration.getMessageDatabaseConfiguration();
   }
 
   public DataSourceFactory getDataSourceFactory() {
 
-    return ForstaConfiguration.getAccountDatabaseConfiguration();
+    return database;
+    //return ForstaConfiguration.getAccountDatabaseConfiguration();
   }
 
   public DataSourceFactory getReadDataSourceFactory() {
