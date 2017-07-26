@@ -135,12 +135,14 @@ public class WhisperServerConfiguration extends Configuration {
 
   public RedisConfiguration getCacheConfiguration() {
 
-      return ForstaConfiguration.getRedisCacheConfiguration();
+    return cache;
+    //return ForstaConfiguration.getRedisCacheConfiguration();
   }
 
   public RedisConfiguration getDirectoryConfiguration() {
 
-    return ForstaConfiguration.getRedisDirectoryConfiguration();
+   return directory;
+   //return ForstaConfiguration.getRedisDirectoryConfiguration();
   }
 
   public DataSourceFactory getMessageStoreConfiguration() {
