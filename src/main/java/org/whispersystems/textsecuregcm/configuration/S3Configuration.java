@@ -17,6 +17,9 @@
 package org.whispersystems.textsecuregcm.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class S3Configuration {
@@ -43,5 +46,19 @@ public class S3Configuration {
 
   public String getAttachmentsBucket() {
     return attachmentsBucket;
+  }
+
+  public S3Configuration() {
+
+  }
+
+  public S3Configuration(
+    String accessKey,
+    String accessSecret,
+    String attachmentsBucket)
+  {
+      this.accessKey         = accessKey;
+      this.accessSecret      = accessSecret;
+      this.attachmentsBucket = attachmentsBucket;
   }
 }

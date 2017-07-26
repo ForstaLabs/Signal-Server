@@ -11,4 +11,13 @@ public class WebsocketConfiguration {
     return enabled;
   }
 
+  public WebsocketConfiguration() {
+
+  }
+
+  public WebsocketConfiguration(
+    Boolean enabled)
+  {
+      this.enabled = enabled;
+  }
 }

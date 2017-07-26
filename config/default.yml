@@ -1,0 +1,78 @@
+twilio: # Twilio SMS gateway configuration
+  accountId: heroku
+  accountToken: heroku
+  numbers:
+      - +12082097606
+  localDomain: heroku
+
+push: # GCM/APN push server configuration
+  host: heroku
+  port: 1
+  username: heroku
+  password: heroku
+
+s3: # AWS S3 configuration
+  accessKey:  heroku # for justin via jeff
+  accessSecret: heroku
+
+  # Name of the S3 bucket (needs to have been created)
+  # for attachments to go.  Should be configured with
+  # correct permissions.
+  attachmentsBucket: heroku
+
+#directory: # Redis server configuration for TS directory
+#  url: "heroku"
+
+#cache: # Redis server configuration for general purpose caching
+#  url: "heroku"
+
+websocket:
+  enabled: true
+
+#messageStore: # Postgres database configuration for message store
+#  driverClass: org.postgresql.Driver
+#  user: "heroku"
+#  password: "heroku"
+#  url: "heroku"
+
+#database: # Postgres database configuration for account store
+#  driverClass: org.postgresql.Driver
+#  user: "heroku"
+#  password: "heroku"
+#  url: "heroku"
+#  properties:
+#    charSet: UTF-8
+
+#federation:
+
+redphone:
+  authKey: 1234567890 #fake
+
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: log/textsecureshserver.log
+      archivedLogFilenamePattern: log/textsecureserver-%d.log.gz
+      archivedFileCount: 5
+    - type: console
+limits:
+    prekeys:
+      bucketSize: 100
+      leakRatePerMinute: 50
+
+    messages:
+      bucketSize: 1000
+      leakRatePerMinute: 500
+
+    attachments:
+      bucketSize: 1000
+      leakRatePerMinute: 100
+
+    allocateDevice:
+      bucketSize: 10
+      leakRatePerMinute: 5
+
+    verifyDevice:
+      bucketSize: 10
+      leakRatePerMinute: 5
