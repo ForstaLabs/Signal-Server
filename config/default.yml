@@ -29,19 +29,19 @@ cache: # Redis server configuration for general purpose caching
 websocket:
   enabled: true
 
-messageStore: # Postgres database configuration for message store
-  driverClass: org.postgresql.Driver
-  user: "heroku"
-  password: "heroku"
-  url: "heroku"
+#messageStore: # Postgres database configuration for message store
+#  driverClass: org.postgresql.Driver
+#  user: "heroku"
+#  password: "heroku"
+#  url: "heroku"
 
-database: # Postgres database configuration for account store
-  driverClass: org.postgresql.Driver
-  user: "heroku"
-  password: "heroku"
-  url: "heroku"
-  properties:
-    charSet: UTF-8
+#database: # Postgres database configuration for account store
+#  driverClass: org.postgresql.Driver
+#  user: "heroku"
+#  password: "heroku"
+#  url: "heroku"
+#  properties:
+#    charSet: UTF-8
 
 #federation:
 
