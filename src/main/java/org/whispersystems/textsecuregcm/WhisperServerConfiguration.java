@@ -26,7 +26,7 @@ import org.whispersystems.textsecuregcm.configuration.RedisConfiguration;
 import org.whispersystems.textsecuregcm.configuration.S3Configuration;
 import org.whispersystems.textsecuregcm.configuration.TestDeviceConfiguration;
 import org.whispersystems.textsecuregcm.configuration.TwilioConfiguration;
-import org.whispersystems.textsecuregcm.configuration.WebsocketConfiguration;
+import org.whispersystems.websocket.configuration.WebSocketConfiguration;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -95,7 +95,7 @@ public class WhisperServerConfiguration extends Configuration {
 
   @Valid
   @JsonProperty
-  private WebsocketConfiguration websocket = new WebsocketConfiguration();
+  private WebSocketConfiguration websocket = new WebSocketConfiguration();
 
   @JsonProperty
   private RedPhoneConfiguration redphone = new RedPhoneConfiguration();
@@ -106,7 +106,7 @@ public class WhisperServerConfiguration extends Configuration {
   private JerseyClientConfiguration httpClient = new JerseyClientConfiguration();
 
 
-  public WebsocketConfiguration getWebsocketConfiguration() {
+  public WebSocketConfiguration getWebSocketConfiguration() {
     return websocket;
   }
 

@@ -59,7 +59,7 @@ public class PubSubConnectionTest {
     OutputStream outputStream = mock(OutputStream.class);
     Socket       socket       = mock(Socket.class      );
     when(socket.getOutputStream()).thenReturn(outputStream);
-    PubSubConnection connection  = new PubSubConnection(socket);
+    PubSubConnection connection  = new PubSubConnection(socket, null);
 
     connection.subscribe("foobar");
 
@@ -74,7 +74,7 @@ public class PubSubConnectionTest {
     OutputStream outputStream = mock(OutputStream.class);
     Socket       socket       = mock(Socket.class      );
     when(socket.getOutputStream()).thenReturn(outputStream);
-    PubSubConnection connection  = new PubSubConnection(socket);
+    PubSubConnection connection  = new PubSubConnection(socket, null);
 
     connection.unsubscribe("bazbar");
 
@@ -92,7 +92,7 @@ public class PubSubConnectionTest {
     when(socket.getOutputStream()).thenReturn(outputStream);
     when(socket.getInputStream()).thenReturn(inputStream);
 
-    PubSubConnection pubSubConnection = new PubSubConnection(socket);
+    PubSubConnection pubSubConnection = new PubSubConnection(socket, null);
     readResponses(pubSubConnection);
   }
 
@@ -104,7 +104,7 @@ public class PubSubConnectionTest {
     when(socket.getOutputStream()).thenReturn(outputStream);
     when(socket.getInputStream()).thenReturn(inputStream);
 
-    PubSubConnection pubSubConnection = new PubSubConnection(socket);
+    PubSubConnection pubSubConnection = new PubSubConnection(socket, null);
     readResponses(pubSubConnection);
   }
 
@@ -116,7 +116,7 @@ public class PubSubConnectionTest {
     when(socket.getOutputStream()).thenReturn(outputStream);
     when(socket.getInputStream()).thenReturn(inputStream);
 
-    PubSubConnection pubSubConnection = new PubSubConnection(socket);
+    PubSubConnection pubSubConnection = new PubSubConnection(socket, null);
     readResponses(pubSubConnection);
   }
 

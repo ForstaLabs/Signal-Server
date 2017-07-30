@@ -224,39 +224,37 @@ public class WhisperServerService extends Application<WhisperServerConfiguration
     environment.jersey().register(keysControllerV2);
     environment.jersey().register(messageController);
 
-    if (config.getWebsocketConfiguration().isEnabled()) {
-      WebSocketEnvironment webSocketEnvironment = new WebSocketEnvironment(environment, config, 90000);
-      webSocketEnvironment.setAuthenticator(new WebSocketAccountAuthenticator(deviceAuthenticator));
-      webSocketEnvironment.setConnectListener(new AuthenticatedConnectListener(accountsManager, pushSender, receiptSender, messagesManager, pubSubManager));
-      webSocketEnvironment.jersey().register(new KeepAliveController(pubSubManager));
+    WebSocketEnvironment webSocketEnvironment = new WebSocketEnvironment(environment, config.getWebSocketConfiguration(), 90000);
+    webSocketEnvironment.setAuthenticator(new WebSocketAccountAuthenticator(deviceAuthenticator));
+    webSocketEnvironment.setConnectListener(new AuthenticatedConnectListener(accountsManager, pushSender, receiptSender, messagesManager, pubSubManager));
+    webSocketEnvironment.jersey().register(new KeepAliveController(pubSubManager));
 
-      WebSocketEnvironment provisioningEnvironment = new WebSocketEnvironment(environment, config);
-      provisioningEnvironment.setConnectListener(new ProvisioningConnectListener(pubSubManager));
-      provisioningEnvironment.jersey().register(new KeepAliveController(pubSubManager));
-      
-      WebSocketResourceProviderFactory webSocketServlet    = new WebSocketResourceProviderFactory(webSocketEnvironment   );
-      WebSocketResourceProviderFactory provisioningServlet = new WebSocketResourceProviderFactory(provisioningEnvironment);
+    WebSocketEnvironment provisioningEnvironment = new WebSocketEnvironment(environment, webSocketEnvironment.getRequestLog(), 60000);
+    provisioningEnvironment.setConnectListener(new ProvisioningConnectListener(pubSubManager));
+    provisioningEnvironment.jersey().register(new KeepAliveController(pubSubManager));
 
-      ServletRegistration.Dynamic websocket    = environment.servlets().addServlet("WebSocket", webSocketServlet      );
-      ServletRegistration.Dynamic provisioning = environment.servlets().addServlet("Provisioning", provisioningServlet);
+    WebSocketResourceProviderFactory webSocketServlet    = new WebSocketResourceProviderFactory(webSocketEnvironment   );
+    WebSocketResourceProviderFactory provisioningServlet = new WebSocketResourceProviderFactory(provisioningEnvironment);
 
-      websocket.addMapping("/v1/websocket/");
-      websocket.setAsyncSupported(true);
+    ServletRegistration.Dynamic websocket    = environment.servlets().addServlet("WebSocket", webSocketServlet      );
+    ServletRegistration.Dynamic provisioning = environment.servlets().addServlet("Provisioning", provisioningServlet);
 
-      provisioning.addMapping("/v1/websocket/provisioning/");
-      provisioning.setAsyncSupported(true);
+    websocket.addMapping("/v1/websocket/");
+    websocket.setAsyncSupported(true);
 
-      webSocketServlet.start();
-      provisioningServlet.start();
+    provisioning.addMapping("/v1/websocket/provisioning/");
+    provisioning.setAsyncSupported(true);
 
-      FilterRegistration.Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
-      filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-      filter.setInitParameter("allowedOrigins", "*");
-      filter.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,X-Signal-Agent");
-      filter.setInitParameter("allowedMethods", "GET,PUT,POST,DELETE,OPTIONS");
-      filter.setInitParameter("preflightMaxAge", "5184000");
-      filter.setInitParameter("allowCredentials", "true");
-    }
+    webSocketServlet.start();
+    provisioningServlet.start();
+
+    FilterRegistration.Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+    filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+    filter.setInitParameter("allowedOrigins", "*");
+    filter.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,X-Signal-Agent");
+    filter.setInitParameter("allowedMethods", "GET,PUT,POST,DELETE,OPTIONS");
+    filter.setInitParameter("preflightMaxAge", "5184000");
+    filter.setInitParameter("allowCredentials", "true");
 
     environment.healthChecks().register("directory", new RedisHealthCheck(directoryClient));
     environment.healthChecks().register("cache", new RedisHealthCheck(cacheClient));

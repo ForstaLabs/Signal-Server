@@ -148,6 +148,44 @@ public class AccountController {
   }
 
   @Timed
+  @GET
+  @Path("/{transport}/code/{number}/{phone}")
+  public Response createAccount(@PathParam("transport") String transport,
+                                @PathParam("number")    String number,
+                                @PathParam("phone")     String phone,
+                                @QueryParam("client")   Optional<String> client)
+      throws IOException, RateLimitExceededException
+  {
+    if (!Util.isValidNumber(phone)) {
+      throw new WebApplicationException(Response.status(400).build());
+    }
+
+    switch (transport) {
+      case "sms":
+        rateLimiters.getSmsDestinationLimiter().validate(phone);
+        break;
+      case "voice":
+        rateLimiters.getVoiceDestinationLimiter().validate(phone);
+        break;
+      default:
+        throw new WebApplicationException(Response.status(422).build());
+    }
+
+    VerificationCode verificationCode = generateVerificationCode(number);
+    pendingAccounts.store(number, verificationCode.getVerificationCode());
+
+    if (testDevices.containsKey(number)) {
+      // noop
+    } else if (transport.equals("sms")) {
+      smsSender.deliverSmsVerification(phone, client, verificationCode.getVerificationCodeDisplay());
+    } else if (transport.equals("voice")) {
+      smsSender.deliverVoxVerification(phone, verificationCode.getVerificationCodeSpeech());
+    }
+
+    return Response.ok().build();
+  }
+
+  @Timed
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("/code/{verification_code}")
