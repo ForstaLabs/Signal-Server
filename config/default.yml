@@ -1,30 +1,30 @@
 twilio:
-  numbers:
-      - +12082097606
+	numbers:
+	- +12082097606
 
 directory:
-  url: "redis://localhost:6379/0"
+	url: "redis://localhost:6379/0"
 
 cache:
-  url: "redis://localhost:6379/1"
+	url: "redis://localhost:6379/1"
 
 server:
-     applicationConnectors:
-         - type: http
-           port: 8180
+	applicationConnectors:
+		- type: http
+		port: 8180
  
-     adminConnectors:
-         - type: http
-           port: 8181
+	adminConnectors:
+		- type: http
+		port: 8181
 
 websocket:
-  enabled: true
+	enabled: true
 
 messageStore:
 	driverClass: org.postgresql.Driver
 	user: dhpikfkdukzdnv
 	password: 9016f29c7323741eeaaf04014699997eed7f97dac7a54af47ec9b8211e4bf9b7
-	url: "jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/messagedb"
+	url: "jdbc:postgres://dhpikfkdukzdnv:9016f29c7323741eeaaf04014699997eed7f97dac7a54af47ec9b8211e4bf9b7@ec2-54-227-252-202.compute-1.amazonaws.com:5432/d35r2b1jecd0q3/messagedb"
 	properties:
 		charSet: UTF-8
 
@@ -32,33 +32,33 @@ database:
 	driverClass: org.postgresql.Driver
 	user: dhpikfkdukzdnv
 	password: 9016f29c7323741eeaaf04014699997eed7f97dac7a54af47ec9b8211e4bf9b7
-	url: "jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/accountsdb"
+	url: "jdbc:postgres://dhpikfkdukzdnv:9016f29c7323741eeaaf04014699997eed7f97dac7a54af47ec9b8211e4bf9b7@ec2-54-227-252-202.compute-1.amazonaws.com:5432/d35r2b1jecd0q3/accountsdb"
 	properties:
 		charSet: UTF-8
 
 redphone:
-  authKey: 1234567890 #fake
+	authKey: 1234567890 #fake
 
 logging:
-  level: INFO
+	level: INFO
 
 limits:
-    prekeys:
-      bucketSize: 100
-      leakRatePerMinute: 50
+	prekeys:
+	bucketSize: 100
+	leakRatePerMinute: 50
 
-    messages:
-      bucketSize: 1000
-      leakRatePerMinute: 500
+	messages:
+		bucketSize: 1000
+		leakRatePerMinute: 500
 
-    attachments:
-      bucketSize: 1000
-      leakRatePerMinute: 100
+	attachments:
+		bucketSize: 1000
+		leakRatePerMinute: 100
 
-    allocateDevice:
-      bucketSize: 10
-      leakRatePerMinute: 5
+	allocateDevice:
+		bucketSize: 10
+		leakRatePerMinute: 5
 
-    verifyDevice:
-      bucketSize: 10
-      leakRatePerMinute: 5
+	verifyDevice:
+		bucketSize: 10
+		leakRatePerMinute: 5
