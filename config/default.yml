@@ -22,11 +22,17 @@ websocket:
 
 messageStore:
 	driverClass: org.postgresql.Driver
+	user: dhpikfkdukzdnv
+	password: 9016f29c7323741eeaaf04014699997eed7f97dac7a54af47ec9b8211e4bf9b7
+	url: "jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/messagedb"
 	properties:
 		charSet: UTF-8
 
 database:
 	driverClass: org.postgresql.Driver
+	user: dhpikfkdukzdnv
+	password: 9016f29c7323741eeaaf04014699997eed7f97dac7a54af47ec9b8211e4bf9b7
+	url: "jdbc:postgresql://ec2-54-227-252-202.compute-1.amazonaws.com:5432/accountsdb"
 	properties:
 		charSet: UTF-8
 
