@@ -32,16 +32,17 @@ ARGS := \
 		-Ddw.database.url=jdbc:postgresql://$(DATABASE_HOST) \
 		-Ddw.messageStore.user=$(DATABASE_USERNAME) \
 		-Ddw.messageStore.password=$(DATABASE_PASSWORD) \
-		-Ddw.messageStore.url=jdbc:postgresql://$(DATABASE_HOST)
+		-Ddw.messageStore.url=jdbc:postgresql://$(DATABASE_HOST) \
+
 
 RUN := $(JAVA) $(ARGS) -jar $(TARGET)
 
 build:
-  mvn install
+	mvn install
 
 dbmigrate:
-  $(RUN) accountdb migrate $(CONFIG)
-  $(RUN) messagedb migrate $(CONFIG)
+	$(RUN) accountdb migrate $(CONFIG)
+	$(RUN) messagedb migrate $(CONFIG)
 
 run: dbmigrate
-  $(RUN) server $(CONFIG)
+	$(RUN) server $(CONFIG)
