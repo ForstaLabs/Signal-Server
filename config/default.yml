@@ -21,10 +21,10 @@ s3: # AWS S3 configuration
   attachmentsBucket: heroku
 
 directory:
-url: "heroku"
+  url: heroku
 
 cache:
-url: "heroku"
+  url: heroku
 
 websocket:
   enabled: true
