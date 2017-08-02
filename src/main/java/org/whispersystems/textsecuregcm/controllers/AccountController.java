@@ -1,3 +1,5 @@
+// vim: ts=2:sw=2:expandtab
+
 /**
  * Copyright (C) 2013 Open WhisperSystems
  *
@@ -32,8 +34,10 @@ import org.whispersystems.textsecuregcm.auth.AuthorizationTokenGenerator;
 import org.whispersystems.textsecuregcm.auth.InvalidAuthorizationHeaderException;
 import org.whispersystems.textsecuregcm.entities.AccountAttributes;
 import org.whispersystems.textsecuregcm.entities.ApnRegistrationId;
+import org.whispersystems.textsecuregcm.entities.DeviceResponse;
 import org.whispersystems.textsecuregcm.entities.GcmRegistrationId;
 import org.whispersystems.textsecuregcm.limits.RateLimiters;
+import org.whispersystems.textsecuregcm.partner.Partner;
 import org.whispersystems.textsecuregcm.providers.TimeProvider;
 import org.whispersystems.textsecuregcm.sms.SmsSender;
 import org.whispersystems.textsecuregcm.sms.TwilioSmsSender;
@@ -61,6 +65,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -308,6 +313,52 @@ public class AccountController {
   public Response getTwiml(@PathParam("code") String encodedVerificationText) {
     return Response.ok().entity(String.format(TwilioSmsSender.SAY_TWIML,
         encodedVerificationText)).build();
+  }
+
+  @Timed
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/user/{userId}")
+  public Response resetAccount(@Auth Partner trustedPartner,
+                               @PathParam("userId") String userId,
+                               @Valid AccountAttributes attrs) {
+    SecureRandom random = new SecureRandom();
+    byte _password[] = random.generateSeed(16);
+    String password = DatatypeConverter.printHexBinary(_password);
+    createAccount(userId, password, trustedPartner.getName(), attrs);
+    return Response.ok("{\"password\": \"" + password + "\"}").build();
+  }
+
+  @Timed
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("/user")
+  public DeviceResponse addDevice(@Auth Account account,
+                                  @Valid AccountAttributes deviceAttrs)
+      throws RateLimitExceededException, DeviceLimitExceededException
+  {
+    rateLimiters.getVerifyDeviceLimiter().validate(account.getNumber());
+    // XXX move max devices to config setting.
+    if (account.getActiveDeviceCount() >= 20) {
+      throw new DeviceLimitExceededException(account.getDevices().size(), 20);
+    }
+    Device device = new Device();
+    device.setName(deviceAttrs.getName());
+    SecureRandom random = new SecureRandom();
+    byte _password[] = random.generateSeed(16);
+    String password = DatatypeConverter.printHexBinary(_password);
+    device.setAuthenticationCredentials(new AuthenticationCredentials(password));
+    device.setSignalingKey(deviceAttrs.getSignalingKey());
+    device.setFetchesMessages(deviceAttrs.getFetchesMessages());
+    device.setId(account.getNextDeviceId());
+    device.setRegistrationId(deviceAttrs.getRegistrationId());
+    device.setLastSeen(Util.todayInMillis());
+    device.setCreated(System.currentTimeMillis());
+    account.addDevice(device);
+    accounts.update(account);
+    return new DeviceResponse(device.getId(), password);
   }
 
   private void createAccount(String number, String password, String userAgent, AccountAttributes accountAttributes) {

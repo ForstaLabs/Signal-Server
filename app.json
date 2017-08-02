@@ -1,33 +1,18 @@
 {
   "name": "TextSecure-Server",
-  "description": "Heroku Deployment file",
-  "scripts": {
-  },
+  "description": "Forsta TextSecure-Server Fork",
+
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "as": "ACCOUNT_DATABASE"
+  }, {
+    "plan": "heroku-postgresql",
+    "as": "MESSAGE_DATABASE"
+  }, {
+    "plan": "heroku-redis"
+  }],
+
   "env": {
-    "ACCOUNTSTORE_DRIVERCLASS": {
-      "required": true
-    },
-    "ACCOUNTSTORE_PASSWORD": {
-      "required": true
-    },
-    "ACCOUNTSTORE_URL": {
-      "required": true
-    },
-    "ACCOUNTSTORE_USERNAME": {
-      "required": true
-    },
-    "MESSAGESTORE_DRIVERCLASS": {
-      "required": true
-    },
-    "MESSAGESTORE_PASSWORD": {
-      "required": true
-    },
-    "MESSAGESTORE_URL": {
-      "required": true
-    },
-    "MESSAGESTORE_USERNAME": {
-      "required": true
-    },
     "PUSHSERVER_HOST": {
       "required": true
     },
@@ -37,19 +22,7 @@
     "PUSHSERVER_PORT": {
       "required": true
     },
-    "PUSHSERVER_QUEUESIZE": {
-      "required": true
-    },
     "PUSHSERVER_USERNAME": {
-      "required": true
-    },
-    "REDIS_CACHEURL": {
-      "required": true
-    },
-    "REDIS_DIRECTORYURL": {
-      "required": true
-    },
-    "REDIS_URL": {
       "required": true
     },
     "S3_ACCESSKEY": {
@@ -70,20 +43,8 @@
     "TWILIO_LOCALDOMAIN": {
       "required": true
     },
-    "TWILIO_NUMBERS": {
-      "required": true
-    },
-    "WEBSOCKET_ENABLE": {
+    "TWILIO_NUMBER": {
       "required": true
     }
-  },
-  "formation": {
-  },
-  "addons": [
-    "heroku-postgresql",
-    "heroku-redis"
-  ],
-  "buildpacks": [
-
-  ]
+  }
 }

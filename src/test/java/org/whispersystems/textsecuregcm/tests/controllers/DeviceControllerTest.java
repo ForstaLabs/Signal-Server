@@ -40,7 +40,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.dropwizard.jersey.validation.ConstraintViolationExceptionMapper;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -77,7 +76,6 @@ public class DeviceControllerTest {
                                                             .addProvider(new AuthValueFactoryProvider.Binder())
                                                             .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
                                                             .addProvider(new DeviceLimitExceededExceptionMapper())
-                                                            .addProvider(new ConstraintViolationExceptionMapper())
                                                             .addResource(new DumbVerificationDeviceController(pendingDevicesManager,
                                                                                                               accountsManager,
                                                                                                               messagesManager,

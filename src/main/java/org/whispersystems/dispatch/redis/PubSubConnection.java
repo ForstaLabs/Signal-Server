@@ -24,6 +24,7 @@ public class PubSubConnection {
   private static final byte[] SUBSCRIBE_TYPE      = {'s', 'u', 'b', 's', 'c', 'r', 'i', 'b', 'e'               };
   private static final byte[] MESSAGE_TYPE        = {'m', 'e', 's', 's', 'a', 'g', 'e'                         };
 
+  private static final byte[] AUTH_COMMAND        = {'A', 'U', 'T', 'H', ' '                                   };
   private static final byte[] SUBSCRIBE_COMMAND   = {'S', 'U', 'B', 'S', 'C', 'R', 'I', 'B', 'E', ' '          };
   private static final byte[] UNSUBSCRIBE_COMMAND = {'U', 'N', 'S', 'U', 'B', 'S', 'C', 'R', 'I', 'B', 'E', ' '};
   private static final byte[] CRLF                = {'\r', '\n'                                                };
@@ -33,11 +34,19 @@ public class PubSubConnection {
   private final Socket           socket;
   private final AtomicBoolean    closed;
 
-  public PubSubConnection(Socket socket) throws IOException {
+  public PubSubConnection(Socket socket, String password) throws IOException {
     this.socket       = socket;
     this.outputStream = socket.getOutputStream();
     this.inputStream  = new RedisInputStream(new BufferedInputStream(socket.getInputStream()));
     this.closed       = new AtomicBoolean(false);
+    if (password != null) {
+        byte[] command = Util.combine(AUTH_COMMAND, password.getBytes(), CRLF);
+        outputStream.write(command);
+        String ok = inputStream.readLine();
+        if (!ok.equals("+OK")) {
+            throw new IOException("Incorrect Redis Password");
+        }
+    }
   }
 
   public void subscribe(String channelName) throws IOException {

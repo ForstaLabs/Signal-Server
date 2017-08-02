@@ -8,6 +8,9 @@ public class DeviceResponse {
   @JsonProperty
   private long deviceId;
 
+  @JsonProperty
+  private String password;
+
   @VisibleForTesting
   public DeviceResponse() {}
 
@@ -15,7 +18,16 @@ public class DeviceResponse {
     this.deviceId = deviceId;
   }
 
+  public DeviceResponse(long deviceId, String password) {
+    this.deviceId = deviceId;
+    this.password = password;
+  }
+
   public long getDeviceId() {
     return deviceId;
+  }
+
+  public String getPassword() {
+    return password;
   }
 }
