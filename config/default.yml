@@ -20,6 +20,9 @@ s3: # AWS S3 configuration
   # correct permissions.
   attachmentsBucket: heroku
 
+redis:
+  url: heroku
+
 directory:
   url: heroku
 
