@@ -21,14 +21,14 @@ websocket:
   enabled: true
 
 messageStore:
-    driverClass: org.postgresql.Driver
-    properties:
-        charSet: UTF-8
+	driverClass: org.postgresql.Driver
+	properties:
+		charSet: UTF-8
 
 database:
-    driverClass: org.postgresql.Driver
-    properties:
-        charSet: UTF-8
+	driverClass: org.postgresql.Driver
+	properties:
+		charSet: UTF-8
 
 redphone:
   authKey: 1234567890 #fake
