@@ -3,7 +3,7 @@ default: build
 ACCOUNT_DATABASE_URL ?= postgres://postgres:NOPE@localhost:5432/account
 MESSAGE_DATABASE_URL ?= postgres://postgres:NOPE@localhost:5432/message
 
-VERSION := 0.99.1
+VERSION := 0.99
 TARGET := target/TextSecureServer-$(VERSION).jar
 CONFIG := config/default.yml
 JAVA := java $(JAVA_OPTS)
