@@ -1,0 +1,74 @@
+logging:
+     level: INFO
+ 
+trusted:
+     partners:
+         - name: ccsm
+           token: SECURETOKEN
+ 
+twilio:
+     numbers:
+         - PLACEHOLDER
+     accountId: MUST_SET_ACCOUNT_ID
+     accountToken: MUST_SET_ACCOUNT_TOKEN
+     localDomain: MUST_SET_LOCAL_DOMAIN
+ 
+redphone:
+     authKey: #not-appliciable
+ 
+push:
+   host: localhost
+   port: 9090
+   username: MUST_SET_PUSH_USER
+   password: MUST_SET_PUSH_PASS
+ 
+s3:
+     accessKey: MUST_SET_S3_ACCESSKEY
+     accessSecret: MUST_SET_S3_ACCESSSECRET
+     attachmentsBucket: MUST_SET_ATTACHMENTSBUCKET
+ 
+server:
+     applicationConnectors:
+         - type: http
+           port: 8180
+ 
+     adminConnectors:
+         - type: http
+           port: 8181
+ 
+directory:
+     url: "redis://localhost:6379/0"
+ 
+cache:
+     url: "redis://localhost:6379/1"
+ 
+messageStore:
+     driverClass: org.postgresql.Driver
+     properties:
+         charSet: UTF-8
+ 
+database:
+     driverClass: org.postgresql.Driver
+     properties:
+         charSet: UTF-8
+ 
+limits:
+     prekeys:
+       bucketSize: 100
+       leakRatePerMinute: 50
+ 
+     messages:
+       bucketSize: 1000
+       leakRatePerMinute: 500
+ 
+     attachments:
+       bucketSize: 1000
+       leakRatePerMinute: 100
+ 
+     allocateDevice:
+       bucketSize: 10
+       leakRatePerMinute: 5
+ 
+     verifyDevice:
+       bucketSize: 10
+       leakRatePerMinute: 5

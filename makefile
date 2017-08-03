@@ -5,7 +5,7 @@ MESSAGE_DATABASE_URL ?= postgres://postgres:NOPE@localhost:5432/message
 
 VERSION := 0.99
 TARGET := target/TextSecureServer-$(VERSION).jar
-CONFIG := config/default.yml
+CONFIG := config/seed.yml
 JAVA := java $(JAVA_OPTS)
 
 ifdef REDIS_URL
