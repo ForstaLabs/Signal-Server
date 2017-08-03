@@ -44,13 +44,15 @@
       "required": true
     }
   },
-  "formation": {
-  },
-  "addons": [
-    "heroku-postgresql",
-    "heroku-redis"
-  ],
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "as": "ACCOUNT_DATABASE"
+  }, {
+    "plan": "heroku-postgresql",
+    "as": "MESSAGE_DATABASE"
+  }, {
+    "plan": "heroku-redis"
+  }],
   "buildpacks": [
-
   ]
 }

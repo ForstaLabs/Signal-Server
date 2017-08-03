@@ -1,38 +1,45 @@
 default: build
 
-PORT ?= 8080
-ADMIN_PORT ?= 8181
-DATABASE_URL ?= postgres://postgres@localhost:5432/tss
+ACCOUNT_DATABASE_URL ?= postgres://postgres:NOPE@localhost:5432/account
+MESSAGE_DATABASE_URL ?= postgres://postgres:NOPE@localhost:5432/message
 
 VERSION := 0.99.1
 TARGET := target/TextSecureServer-$(VERSION).jar
 CONFIG := config/default.yml
 JAVA := java $(JAVA_OPTS)
-DATABASE_USERNAME := $(shell echo $(DATABASE_URL) | awk -F'://' {'print $$2'} | awk -F':' {'print $$1'})
-DATABASE_PASSWORD := $(shell echo $(DATABASE_URL) | awk -F'://' {'print $$2'} | awk -F':' {'print $$2'} | awk -F'@' {'print $$1'})
-DATABASE_HOST := $(shell echo $(DATABASE_URL) | awk -F'@' {'print $$2'})
+
+ifdef REDIS_URL
+  REDIS_DIR_URL=$(REDIS_URL)/0
+  REDIS_CACHE_URL=$(REDIS_URL)/0
+endif
+
+get_db_username = $(shell echo $(1) | awk -F'://' {'print $$2'} | awk -F':' {'print $$1'})
+get_db_password = $(shell echo $(1) | awk -F'://' {'print $$2'} | awk -F':' {'print $$2'} | awk -F'@' {'print $$1'})
+get_db_host = $(shell echo $(1) | awk -F'@' {'print $$2'})
+ifset = $(if $(1),$(2)="$(1)")
+
 ARGS := \
-		-Ddw.twilio.accountId=$(TWILIO_ACCOUNTID) \
-		-Ddw.twilio.accountToken=$(TWILIO_ACCOUNTTOKEN) \
-		-Ddw.twilio.numbers[0]=$(TWILIO_NUMBERS) \
-		-Ddw.twilio.localDomain=$(TWILIO_LOCALDOMAIN) \
-		-Ddw.push.host=$(PUSHSERVER_HOST) \
-		-Ddw.push.port=$(PUSHSERVER_PORT) \
-		-Ddw.push.username=$(PUSHSERVER_USERNAME) \
-		-Ddw.push.password=$(PUSHSERVER_PASSWORD) \
-		-Ddw.s3.accessKey=$(S3_ACCESSKEY) \
-		-Ddw.s3.accessSecret=$(S3_ACCESSSECRET) \
-		-Ddw.s3.attachmentsBucket=$(S3_ATTACHMENTSBUCKET) \
-		-Ddw.directory.url=$(REDIS_URL)/0 \
-		-Ddw.cache.url=$(REDIS_URL)/1 \
-		-Ddw.server.applicationConnectors[0].port=$(PORT) \
-		-Ddw.server.adminConnectors[0].port=$(ADMIN_PORT) \
-		-Ddw.database.user=$(DATABASE_USERNAME) \
-		-Ddw.database.password=$(DATABASE_PASSWORD) \
-		-Ddw.database.url=jdbc:postgresql://$(DATABASE_HOST) \
-		-Ddw.messageStore.user=$(DATABASE_USERNAME) \
-		-Ddw.messageStore.password=$(DATABASE_PASSWORD) \
-		-Ddw.messageStore.url=jdbc:postgresql://$(DATABASE_HOST) \
+		$(call ifset,$(TWILIO_ACCOUNTID),-Ddw.twilio.accountId) \
+		$(call ifset,$(TWILIO_ACCOUNTTOKEN),-Ddw.twilio.accountToken) \
+		$(call ifset,$(TWILIO_NUMBERS),-Ddw.twilio.numbers[0]) \
+		$(call ifset,$(TWILIO_LOCALDOMAIN),-Ddw.twilio.localDomain) \
+		$(call ifset,$(PUSHSERVER_HOST),-Ddw.push.host) \
+		$(call ifset,$(PUSHSERVER_PORT),-Ddw.push.port) \
+		$(call ifset,$(PUSHSERVER_USERNAME),-Ddw.push.username) \
+		$(call ifset,$(PUSHSERVER_PASSWORD),-Ddw.push.password) \
+		$(call ifset,$(S3_ACCESSKEY),-Ddw.s3.accessKey) \
+		$(call ifset,$(S3_ACCESSSECRET),-Ddw.s3.accessSecret) \
+		$(call ifset,$(S3_ATTACHMENTSBUCKET),-Ddw.s3.attachmentsBucket) \
+		$(call ifset,$(REDIS_DIR_URL),-Ddw.directory.url) \
+		$(call ifset,$(REDIS_CACHE_URL),-Ddw.cache.url) \
+		$(call ifset,$(PORT),-Ddw.server.applicationConnectors[0].port) \
+		$(call ifset,$(ADMIN_PORT),-Ddw.server.adminConnectors[0].port) \
+		-Ddw.database.url=jdbc:postgresql://$(call get_db_host,$(ACCOUNT_DATABASE_URL)) \
+		-Ddw.database.user=$(call get_db_username,$(ACCOUNT_DATABASE_URL)) \
+		-Ddw.database.password=$(call get_db_password,$(ACCOUNT_DATABASE_URL)) \
+		-Ddw.messageStore.url=jdbc:postgresql://$(call get_db_host,$(MESSAGE_DATABASE_URL)) \
+		-Ddw.messageStore.user=$(call get_db_username,$(MESSAGE_DATABASE_URL)) \
+		-Ddw.messageStore.password=$(call get_db_password,$(MESSAGE_DATABASE_URL))
 
 
 RUN := $(JAVA) $(ARGS) -jar $(TARGET)
