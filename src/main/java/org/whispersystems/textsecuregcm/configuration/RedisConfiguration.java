@@ -35,12 +35,5 @@ public class RedisConfiguration {
   }
 
   public RedisConfiguration() {
-
-  }
-
-  public RedisConfiguration(
-    String url)
-  {
-      this.url = url;
   }
 }

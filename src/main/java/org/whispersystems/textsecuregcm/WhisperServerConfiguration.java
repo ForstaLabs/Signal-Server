@@ -112,13 +112,11 @@ public class WhisperServerConfiguration extends Configuration {
   }
 
   public TwilioConfiguration getTwilioConfiguration() {
-
-    return ForstaConfiguration.getTwilioConfiguration();
+    return twilio;
   }
 
   public PushConfiguration getPushConfiguration() {
-
-    return ForstaConfiguration.getPushConfiguration();
+    return push;
   }
 
   public JerseyClientConfiguration getJerseyClientConfiguration() {
@@ -134,27 +132,19 @@ public class WhisperServerConfiguration extends Configuration {
   }
 
   public RedisConfiguration getCacheConfiguration() {
-
     return cache;
-    //return ForstaConfiguration.getRedisCacheConfiguration();
   }
 
   public RedisConfiguration getDirectoryConfiguration() {
-
    return directory;
-   //return ForstaConfiguration.getRedisDirectoryConfiguration();
   }
 
   public DataSourceFactory getMessageStoreConfiguration() {
-
     return messageStore;
-    //return ForstaConfiguration.getMessageDatabaseConfiguration();
   }
 
   public DataSourceFactory getDataSourceFactory() {
-
     return database;
-    //return ForstaConfiguration.getAccountDatabaseConfiguration();
   }
 
   public DataSourceFactory getReadDataSourceFactory() {
