@@ -92,7 +92,7 @@ public class PubSubConnectionTest {
     when(socket.getOutputStream()).thenReturn(outputStream);
     when(socket.getInputStream()).thenReturn(inputStream);
 
-    PubSubConnection pubSubConnection = new PubSubConnection(socketm null);
+    PubSubConnection pubSubConnection = new PubSubConnection(socket, null);
     readResponses(pubSubConnection);
   }
 
@@ -104,7 +104,7 @@ public class PubSubConnectionTest {
     when(socket.getOutputStream()).thenReturn(outputStream);
     when(socket.getInputStream()).thenReturn(inputStream);
 
-    PubSubConnection pubSubConnection = new PubSubConnection(socket);
+    PubSubConnection pubSubConnection = new PubSubConnection(socket, null);
     readResponses(pubSubConnection);
   }
 
