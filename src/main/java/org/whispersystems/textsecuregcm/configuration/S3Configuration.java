@@ -49,16 +49,5 @@ public class S3Configuration {
   }
 
   public S3Configuration() {
-
-  }
-
-  public S3Configuration(
-    String accessKey,
-    String accessSecret,
-    String attachmentsBucket)
-  {
-      this.accessKey         = accessKey;
-      this.accessSecret      = accessSecret;
-      this.attachmentsBucket = attachmentsBucket;
   }
 }

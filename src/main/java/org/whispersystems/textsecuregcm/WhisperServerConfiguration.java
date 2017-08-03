@@ -120,15 +120,11 @@ public class WhisperServerConfiguration extends Configuration {
   }
 
   public JerseyClientConfiguration getJerseyClientConfiguration() {
-
     return httpClient;
   }
 
   public S3Configuration getS3Configuration() {
-
-    this.s3 =  ForstaConfiguration.getS3Configuration();
-
-    return this.s3;
+    return s3;
   }
 
   public RedisConfiguration getCacheConfiguration() {
