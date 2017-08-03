@@ -1,11 +1,6 @@
 logging:
      level: INFO
  
-trusted:
-     partners:
-         - name: ccsm
-           token: SECURETOKEN
- 
 twilio:
      numbers:
          - PLACEHOLDER
