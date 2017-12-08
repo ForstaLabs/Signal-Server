@@ -44,8 +44,10 @@ Configuration is achieved via setting env vars.
     CCSM_PARTNER_TOKEN
 
 
+LICENSE
 ---------------------
 
 Copyright 2013 Open Whisper Systems
+Copyright 2017 Forsta Inc.
 
 Licensed under the AGPLv3: https://www.gnu.org/licenses/agpl-3.0.html
